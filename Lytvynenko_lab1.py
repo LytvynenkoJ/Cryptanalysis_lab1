@@ -25,3 +25,12 @@ prob_c = np.array(prob_c, dtype=float)
 for i in range(20):
     prob_c[i] = sum(table_cm[i])
 print(prob_c)
+
+#будуємо таблицю розподілу ймовірностей P(M|C)
+#використовуємо формулу умовної ймовірності: P(M|C) = P(M,C)/P(C)
+table_mc = [[0 for j in range(20)] for i in range(20)]
+table_mc = np.array(table_mc, dtype=float)
+for i in range(20):
+    for j in range(20):
+        table_mc[i][j]=table_cm[i][j]/prob_c[i]
+print(table_mc)
