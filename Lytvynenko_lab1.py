@@ -17,3 +17,11 @@ for i in range(20):
         table_cm[i][x]+=temp
 table_cm = np.array(table_cm)
 print(table_cm)
+
+#будуємо таблицю розподілу ймовірностей P(C)
+#для кожного С сумуємо P(M, C) по всім M
+prob_c=[0 for j in range(20)]
+prob_c = np.array(prob_c, dtype=float)
+for i in range(20):
+    prob_c[i] = sum(table_cm[i])
+print(prob_c)
