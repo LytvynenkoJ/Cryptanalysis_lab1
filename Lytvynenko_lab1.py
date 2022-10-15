@@ -23,7 +23,8 @@ print(table_cm)
 prob_c=[0 for j in range(20)]
 prob_c = np.array(prob_c, dtype=float)
 for i in range(20):
-    prob_c[i] = sum(table_cm[i])
+    for j in range(20):
+        prob_c[i] += table_cm[i][j]
 print(prob_c)
 
 #будуємо таблицю розподілу ймовірностей P(M|C)
