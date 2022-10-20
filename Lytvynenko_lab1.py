@@ -35,3 +35,22 @@ for i in range(20):
     for j in range(20):
         table_mc[i][j]=table_cm[i][j]/prob_c[i]
 print(table_mc)
+
+#будуємо детерміністичну вирішуючу функцію, тобто максимізуємо P(M|C)
+#та складаємо відповідну таблицю: 
+#   перший рядок вказує на шифротекст з відповідним номером
+#   другий рядок - номер відкритого тексту, який за нашим припущенням було зашифровано
+#одразу ж рахуємо середні втрати як 1 - сума ймовірностей Р(М, С), 
+#що знаходяться на відповідних місцях, отриманих за допомогою детерміністичної вирішуючої функції
+av_func_baes=1
+result_baes=[[j for j in range(20)]]
+result_baes.append([0]*20)
+result_baes = np.array(result_baes, dtype=int)
+for i in range(20):
+    max_value = np.max(table_mc[i])
+    temp = np.where(table_mc[i]==max_value)
+    result_baes[1][i]=temp[0][0]
+    t = result_baes[1][i]
+    av_func_baes-=table_cm[i][t]
+print(result_baes)
+print(av_func_baes)
