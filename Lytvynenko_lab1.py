@@ -54,3 +54,27 @@ for i in range(20):
     av_func_baes-=table_cm[i][t]
 print(result_baes)
 print(av_func_baes)
+
+#будуємо стохастичну вирішуючу функцію, тобто максимізуємо P(M|C)
+#та складаємо відповідну таблицю: 
+#   -якщо існує єдиний максимум умовної ймовірності для певного С, 
+#       то на відповідному місці в таблиці ставимо 1
+#   -якщо максимум умовної ймовірності для певного С не єдиний, 
+#       то на відповідних місцях в таблиці ставимо 1/t,
+#       де t - кількість максимумів
+#по рядках C, по стовпцях M
+#одразу ж рахуємо середні втрати як 1 - сума ймовірностей Р(М, С), 
+#що знаходяться на відповідних місцях, отриманих за допомогою стохастичної вирішуючої функції
+av_func_stoh=1
+result_stoh=[[0 for j in range(20)] for i in range(20)]
+result_stoh = np.array(result_stoh, dtype=float)
+for i in range(20):
+    max_value = np.max(table_mc[i])
+    temp = np.where(table_mc[i]==max_value)
+    x=temp[0][0]
+    av_func_stoh-=table_cm[i][x]
+    for j in range(len(temp)):
+        x = temp[j]
+        result_stoh[i][x]=1/len(temp[0])
+print(result_stoh)
+print(av_func_stoh)
