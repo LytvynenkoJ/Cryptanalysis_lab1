@@ -14,7 +14,7 @@ for i in range(20):
     for j in range(20):
         temp = prob_data[i][0]*prob_data[j][1]
         x = table_data[i][j]
-        table_cm[i][x]+=temp
+        table_cm[x][i]+=temp
 table_cm = np.array(table_cm)
 print(table_cm)
 
