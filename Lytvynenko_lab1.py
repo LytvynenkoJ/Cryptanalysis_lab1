@@ -18,6 +18,20 @@ for i in range(20):
 table_cm = np.array(table_cm)
 print(table_cm)
 
+#вивід результатів у файл prob.csv
+f = open('prob.csv', 'w')
+f.write("P(M,C)\n")
+for i in range(20):
+    f.write(";M "+str(i))
+f.write("\n")
+for i in range(20):
+    f.write("C "+str(i))
+    for j in range(20):
+        f.write(";"+str(round(table_cm[i][j],4)))
+        #f.write(";")
+    f.write("\n")
+f.close()
+
 #будуємо таблицю розподілу ймовірностей P(C)
 #для кожного С сумуємо P(M, C) по всім M
 prob_c=[0 for j in range(20)]
@@ -27,6 +41,15 @@ for i in range(20):
         prob_c[i] += table_cm[i][j]
 print(prob_c)
 
+#вивід результатів у файл prob.csv
+f = open('prob.csv', 'a')
+f.write("\n\n\n\n P(C)\n")
+for i in range(20):
+    f.write("C "+str(i))
+    f.write(";"+str(round(prob_c[i],4)))
+    f.write("\n")
+f.close()
+
 #будуємо таблицю розподілу ймовірностей P(M|C)
 #використовуємо формулу умовної ймовірності: P(M|C) = P(M,C)/P(C)
 table_mc = [[0 for j in range(20)] for i in range(20)]
@@ -35,6 +58,20 @@ for i in range(20):
     for j in range(20):
         table_mc[i][j]=table_cm[i][j]/prob_c[i]
 print(table_mc)
+
+#вивід результатів у файл prob.csv
+f = open('prob.csv', 'a')
+f.write("\n\n\n\n P(M|C)\n")
+for i in range(20):
+    f.write(";M "+str(i))
+f.write("\n")
+for i in range(20):
+    f.write("C "+str(i))
+    for j in range(20):
+        f.write(";"+str(round(table_mc[i][j],4)))
+        #f.write(";")
+    f.write("\n")
+f.close()
 
 #будуємо детерміністичну вирішуючу функцію, тобто максимізуємо P(M|C)
 #та складаємо відповідну таблицю: 
@@ -54,6 +91,20 @@ for i in range(20):
     av_func_baes-=table_cm[i][t]
 print(result_baes)
 print(av_func_baes)
+
+#вивід результатів у файл func_results.csv
+f = open('func_results.csv', 'w')
+f.write("\n\n\n\n Deterministic\n")
+f.write("C")
+for i in range(20):
+    f.write(";"+str(round(result_baes[0][i],4)))
+f.write("\n")
+f.write("M")
+for i in range(20):
+    f.write(";"+str(round(result_baes[1][i],4)))
+f.write("\n")
+f.write("\n Av.Function;"+str(av_func_baes))
+f.close()
 
 #будуємо стохастичну вирішуючу функцію, тобто максимізуємо P(M|C)
 #та складаємо відповідну таблицю: 
@@ -78,3 +129,18 @@ for i in range(20):
         result_stoh[i][x]=1/len(temp[0])
 print(result_stoh)
 print(av_func_stoh)
+
+#вивід результатів у файл func_results.csv
+f = open('func_results.csv', 'a')
+f.write("Stohastic\n")
+for i in range(20):
+    f.write(";M "+str(i))
+f.write("\n")
+for i in range(20):
+    f.write("C "+str(i))
+    for j in range(20):
+        f.write(";"+str(round(result_stoh[i][j],4)))
+        #f.write(";")
+    f.write("\n")
+f.write("\n Av.Function;"+str(av_func_stoh))
+f.close()
